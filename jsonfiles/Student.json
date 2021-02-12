@@ -1,0 +1,10 @@
+{
+   "firstName": "fn",
+    "lastName":"Ln",
+    "email": "Email",
+    "programme":"Programme",
+     "courses": [
+      "Java",
+      "Selenium"
+    ]
+  }

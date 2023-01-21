@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.testng.annotations.DataProvider;
@@ -24,25 +25,30 @@ public class TestSoapServicesByRestAssuredDDT {
 	
 	@Test(priority=1)
     public void PostDataByXMLBodyFile() throws IOException{
-
+     /*
 	FileInputStream fileinputstream=new FileInputStream(new File(".\\xmlfiles\\request1.xml"));
 	String Jsonbody=org.apache.commons.io.IOUtils.toString(fileinputstream,"utf-8");
-      RestAssured.baseURI="http://currencyconverter.kowabunga.net";
+	
+	*/
+		String req= generateStringFromResource (".\\xmlfiles\\request1.xml")
+				.replace("param_1","5").
+				replace("param_2","2");
+      RestAssured.baseURI="https://ecs.syr.edu/faculty/fawcett/Handouts/cse775/code/calcWebService";
      // System.out.print(Jsonbody);
      
       Response response=
       given().contentType("text/xml")
       .and()
-      .body(Jsonbody)
+      .body(req)
       .when()
-      .post("/converter.asmx")
+      .post("/Calc.asmx")
       .then()
     
       .log().all().extract().response()
       
       ;
       XmlPath xmlxpath=new  XmlPath(response.asString());
-		String rates=xmlxpath.getString("GetConversionRateResult");
+		String rates=xmlxpath.getString("AddResult");
 		System.out.println(rates);
      
 
